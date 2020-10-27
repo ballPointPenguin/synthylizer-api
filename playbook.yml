@@ -1,0 +1,72 @@
+---
+- name: api deploy
+  hosts: beast
+  vars:
+    homedir: "/home/{{ username }}"
+    org: ballPointPenguin
+    repo: synthylizer-api
+    username: hank
+    workdir: "{{ homedir }}/code/src/github.com/{{ org }}/{{ repo }}"
+
+  tasks:
+    - name: ensure workdir is present
+      file:
+        path: "{{ workdir }}"
+        state: directory
+
+    - name: clone or update governess-api repository
+      git:
+        accept_hostkey: yes
+        dest: "{{ workdir }}"
+        repo: "https://github.com/{{ org }}/{{ repo }}.git"
+        update: yes
+        version: daddy
+
+    - name: copy .env.production.local to remote folder
+      copy:
+        src: .env.production.local
+        dest: "{{ workdir }}/.env.production.local"
+
+    - name: ensure postgres data container
+      docker_container:
+        image: postgres:13
+        name: synthylizer-db-data
+        state: stopped
+
+    - name: run postgres db container
+      docker_container:
+        env_file: "{{ workdir }}/.env.production.local"
+        image: postgres:13
+        name: synthylizer-db
+        restart_policy: always
+        volumes_from:
+          - synthylizer-db-data
+
+    - name: build docker api image
+      docker_image:
+        force_source: yes
+        name: synthylizer-api
+        source: build
+        build:
+          path: "{{ workdir }}"
+          pull: no
+
+    - name: run api container
+      docker_container:
+        expose:
+          - 3000
+        image: synthylizer-api
+        name: synthylizer-api
+        restart_policy: always
+        env:
+          LETSENCRYPT_HOST: "api.synthylizer.com"
+          VIRTUAL_HOST: "api.synthylizer.com"
+          VIRUTAL_PORT: "3000"
+        links:
+          - "synthylizer-db:postgres"
+
+    - name: run rails db:migrate
+      command: docker exec synthylizer-api bin/rails db:migrate
+
+    # - name: import seed data
+    #   command: docker exec synthylizer-api bin/rake db:seed:activity db:seed:prod
