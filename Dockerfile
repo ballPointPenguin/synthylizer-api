@@ -1,4 +1,4 @@
-FROM ruby:2.7
+FROM ruby:2.7.2
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
@@ -13,7 +13,9 @@ ENV RAILS_LOG_TO_STDOUT true
 COPY Gemfile* /usr/src/app/
 # COPY Gemfile.lock /usr/src/app/
 RUN gem install bundler
-RUN bundle install --deployment --without development test
+RUN bundle config set deployment 'true'
+RUN bundle config set without 'development test'
+RUN bundle install
 
 COPY . /usr/src/app
 
