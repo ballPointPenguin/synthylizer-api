@@ -1,0 +1,38 @@
+<h1>Show Synthesizer</h1>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @synthesizer.name %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @synthesizer.description %>
+  </li>
+
+  <li>
+    <strong>Release year:</strong>
+    <%= @synthesizer.release_year %>
+  </li>
+
+  <li>
+    <strong>Polyphony:</strong>
+    <%= @synthesizer.polyphony %>
+  </li>
+
+  <li>
+    <strong>Synthesis type:</strong>
+    <%= @synthesizer.synthesis_type %>
+  </li>
+
+  <li>
+    <strong>Keys:</strong>
+    <%= @synthesizer.keys %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.synthesizer_path(@conn, :edit, @synthesizer) %></span> |
+<span><%= link "Back", to: Routes.synthesizer_path(@conn, :index) %></span>

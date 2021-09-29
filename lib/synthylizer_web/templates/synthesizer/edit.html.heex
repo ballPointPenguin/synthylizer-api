@@ -1,0 +1,5 @@
+<h1>Edit Synthesizer</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.synthesizer_path(@conn, :update, @synthesizer)) %>
+
+<span><%= link "Back", to: Routes.synthesizer_path(@conn, :index) %></span>
