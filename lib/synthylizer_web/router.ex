@@ -19,6 +19,7 @@ defmodule SynthylizerWeb.Router do
 
     get "/", PageController, :index
     resources "/synthesizers", SynthesizerController
+    resources "/users", UserController
   end
 
   # Other scopes may use custom stacks.
