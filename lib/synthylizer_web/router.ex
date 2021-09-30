@@ -18,6 +18,7 @@ defmodule SynthylizerWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    resources "/synthesizers", SynthesizerController
   end
 
   # Other scopes may use custom stacks.

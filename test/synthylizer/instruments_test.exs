@@ -30,6 +30,7 @@ defmodule Synthylizer.InstrumentsTest do
       assert synthesizer.polyphony == "some polyphony"
       assert synthesizer.release_year == 42
       assert synthesizer.synthesis_type == "some synthesis_type"
+      assert synthesizer.slug == "some-name"
     end
 
     test "create_synthesizer/1 with invalid data returns error changeset" do
@@ -47,6 +48,7 @@ defmodule Synthylizer.InstrumentsTest do
       assert synthesizer.polyphony == "some updated polyphony"
       assert synthesizer.release_year == 43
       assert synthesizer.synthesis_type == "some updated synthesis_type"
+      assert synthesizer.slug == "some-updated-name"
     end
 
     test "update_synthesizer/2 with invalid data returns error changeset" do

@@ -4,10 +4,11 @@ defmodule Synthylizer.Instruments.Synthesizer do
 
   schema "synthesizers" do
     field :description, :string
-    field :keys, :integer
+    field :keys, :integer, default: 0
     field :name, :string
     field :polyphony, :string
     field :release_year, :integer
+    field :slug, :string
     field :synthesis_type, :string
 
     timestamps()
@@ -15,8 +16,31 @@ defmodule Synthylizer.Instruments.Synthesizer do
 
   @doc false
   def changeset(synthesizer, attrs) do
+    required_fields = [:name]
+    optional_fields = [:description, :release_year, :polyphony, :synthesis_type, :keys, :slug]
+
     synthesizer
-    |> cast(attrs, [:name, :description, :release_year, :polyphony, :synthesis_type, :keys])
-    |> validate_required([:name, :description, :release_year, :polyphony, :synthesis_type, :keys])
+    |> cast(attrs, required_fields ++ optional_fields)
+    |> validate_required(required_fields)
+    |> unique_constraint(:name)
+    |> slugify_name()
+    |> unique_constraint(:slug)
+  end
+
+  defp slugify_name(changeset) do
+    case changeset.valid? do
+      true ->
+        name = get_field(changeset, :name)
+        put_change(changeset, :slug, slugify(name))
+
+      _ ->
+        changeset
+    end
+  end
+
+  defp slugify(str) do
+    str
+    |> String.downcase()
+    |> String.replace(~r/[^\w-]/u, "-")
   end
 end

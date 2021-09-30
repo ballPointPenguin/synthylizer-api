@@ -3,7 +3,8 @@ defmodule Synthylizer.Repo.Migrations.CreateSynthesizers do
 
   def change do
     create table(:synthesizers) do
-      add :name, :string
+      add :name, :string, null: false
+      add :slug, :string, null: false
       add :description, :string
       add :release_year, :integer
       add :polyphony, :string
@@ -12,5 +13,8 @@ defmodule Synthylizer.Repo.Migrations.CreateSynthesizers do
 
       timestamps()
     end
+
+    create unique_index(:synthesizers, [:name])
+    create unique_index(:synthesizers, [:slug])
   end
 end

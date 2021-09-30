@@ -14,6 +14,7 @@ defmodule Synthylizer.InstrumentsFixtures do
         description: "some description",
         keys: 42,
         name: "some name",
+        slug: "some-name",
         polyphony: "some polyphony",
         release_year: 42,
         synthesis_type: "some synthesis_type"

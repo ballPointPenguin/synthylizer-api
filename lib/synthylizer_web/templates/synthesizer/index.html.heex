@@ -4,6 +4,7 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Slug</th>
       <th>Description</th>
       <th>Release year</th>
       <th>Polyphony</th>
@@ -17,6 +18,7 @@
 <%= for synthesizer <- @synthesizers do %>
     <tr>
       <td><%= synthesizer.name %></td>
+      <td><%= synthesizer.slug %></td>
       <td><%= synthesizer.description %></td>
       <td><%= synthesizer.release_year %></td>
       <td><%= synthesizer.polyphony %></td>
