@@ -10,9 +10,54 @@ defmodule Synthylizer.InstrumentsTest do
 
     @invalid_attrs %{description: nil, keys: nil, name: nil, polyphony: nil, release_year: nil, synthesis_type: nil}
 
+    test "get_synthesizer_by_slug!/1 returns the synthesizer" do
+      synthesizer = synthesizer_fixture()
+      assert Instruments.get_synthesizer_by_slug!(synthesizer.slug) == synthesizer
+    end
+
     test "list_synthesizers/0 returns all synthesizers" do
       synthesizer = synthesizer_fixture()
       assert Instruments.list_synthesizers() == [synthesizer]
+    end
+
+    test "returns limited number of synthesizers" do
+      synthesizers_fixture()
+
+      criteria = %{limit: 2}
+
+      results = Instruments.list_synthesizers(criteria)
+
+      assert length(results) == 2
+    end
+
+    test "returns limited and ordered synthesizers" do
+      synthesizers_fixture()
+
+      args = %{limit: 2, order: :desc}
+
+      results = Instruments.list_synthesizers(args)
+
+      assert Enum.map(results, &(&1.name)) == ["Synth 3", "Synth 2"]
+    end
+
+    test "returns synthesizers filtered by matching name" do
+      synthesizers_fixture()
+
+      criteria = %{filter: %{matching: "1"}}
+
+      results = Instruments.list_synthesizers(criteria)
+
+      assert Enum.map(results, &(&1.name)) == ["Synth 1"]
+    end
+
+    test "returns synthesizers filtered by matching keys" do
+      synthesizers_fixture()
+
+      criteria = %{filter: %{keys: 0}}
+
+      results = Instruments.list_synthesizers(criteria)
+
+      assert Enum.map(results, &(&1.name)) == ["Synth 3"]
     end
 
     test "get_synthesizer!/1 returns the synthesizer with given id" do

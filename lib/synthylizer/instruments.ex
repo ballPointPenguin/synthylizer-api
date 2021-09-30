@@ -9,6 +9,15 @@ defmodule Synthylizer.Instruments do
   alias Synthylizer.Instruments.Synthesizer
 
   @doc """
+  Returns the synthesizer with the given `slug`.
+
+  Raises `Ecto.NeResultsError` if no synth was found.
+  """
+  def get_synthesizer_by_slug!(slug) do
+    Repo.get_by!(Synthesizer, slug: slug)
+  end
+
+  @doc """
   Returns the list of synthesizers.
 
   ## Examples
@@ -19,6 +28,43 @@ defmodule Synthylizer.Instruments do
   """
   def list_synthesizers do
     Repo.all(Synthesizer)
+  end
+
+  @doc """
+  Returns a list of synths matching the given `criteria`.
+
+  Example Criteria:
+
+  [{:limit, 15}, {:order, :asc}, {:filter, [{:matching, "sub"}, {:keys, 0}]}]
+  """
+  def list_synthesizers(criteria) do
+    query = from s in Synthesizer
+
+    Enum.reduce(criteria, query, fn
+      {:limit, limit}, query ->
+        from s in query, limit: ^limit
+
+      {:filter, filters}, query ->
+        filter_with(filters, query)
+
+      {:order, order}, query ->
+        from s in query, order_by: [{^order, :id}]
+    end)
+    |> Repo.all
+  end
+
+  defp filter_with(filters, query) do
+    Enum.reduce(filters, query, fn
+      {:matching, term}, query ->
+        pattern = "%#{term}%"
+
+        from q in query,
+          where:
+            ilike(q.name, ^pattern) or
+            ilike(q.description, ^pattern) or
+            ilike(q.polyphony, ^pattern) or
+            ilike(q.synthesis_type, ^pattern)
+      end)
   end
 
   @doc """
