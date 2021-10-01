@@ -37,6 +37,11 @@
     <%= @synthesizer.keys %>
   </li>
 
+  <li>
+    <strong>Image</strong>
+    <img src={@synthesizer.image}>
+  </li>
+
 </ul>
 
 <span><%= link "Edit", to: Routes.synthesizer_path(@conn, :edit, @synthesizer) %></span> |

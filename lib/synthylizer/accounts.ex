@@ -101,4 +101,21 @@ defmodule Synthylizer.Accounts do
   def change_user(%User{} = user, attrs \\ %{}) do
     User.changeset(user, attrs)
   end
+
+  @doc """
+  Authenticates a user.
+
+  Returns `{:ok, user}` if a user exists with the given username
+  and the password is valid. Otherwise, `:error` is returned.
+  """
+  def authenticate(username, password) do
+    user = Repo.get_by(User, username: username)
+
+    with %{password_hash: password_hash} <- user,
+      true <- Pbkdf2.verify_pass(password, password_hash) do
+        {:ok, user}
+      else
+        _ -> :error
+      end
+  end
 end

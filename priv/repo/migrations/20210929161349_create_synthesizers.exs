@@ -4,12 +4,13 @@ defmodule Synthylizer.Repo.Migrations.CreateSynthesizers do
   def change do
     create table(:synthesizers) do
       add :name, :string, null: false
-      add :slug, :string, null: false
       add :description, :string
-      add :release_year, :integer
-      add :polyphony, :string
-      add :synthesis_type, :string
+      add :image, :string
       add :keys, :integer
+      add :polyphony, :string
+      add :release_year, :integer
+      add :slug, :string, null: false
+      add :synthesis_type, :string
 
       timestamps()
     end

@@ -12,10 +12,12 @@ defmodule Synthylizer.AccountsFixtures do
       attrs
       |> Enum.into(%{
         email: "some email",
-        password_hash: "some password_hash",
+        password: "some password",
         username: "some username"
       })
       |> Synthylizer.Accounts.create_user()
+
+    # IO.inspect(user)
 
     user
   end

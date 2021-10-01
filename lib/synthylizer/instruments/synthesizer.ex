@@ -4,6 +4,7 @@ defmodule Synthylizer.Instruments.Synthesizer do
 
   schema "synthesizers" do
     field :description, :string
+    field :image, :string
     field :keys, :integer, default: 0
     field :name, :string
     field :polyphony, :string
@@ -17,7 +18,7 @@ defmodule Synthylizer.Instruments.Synthesizer do
   @doc false
   def changeset(synthesizer, attrs) do
     required_fields = [:name]
-    optional_fields = [:description, :release_year, :polyphony, :synthesis_type, :keys, :slug]
+    optional_fields = [:description, :release_year, :polyphony, :synthesis_type, :keys, :slug, :image]
 
     synthesizer
     |> cast(attrs, required_fields ++ optional_fields)

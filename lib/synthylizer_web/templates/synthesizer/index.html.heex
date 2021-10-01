@@ -10,6 +10,7 @@
       <th>Polyphony</th>
       <th>Synthesis type</th>
       <th>Keys</th>
+      <th>Image</th>
 
       <th></th>
     </tr>
@@ -24,6 +25,7 @@
       <td><%= synthesizer.polyphony %></td>
       <td><%= synthesizer.synthesis_type %></td>
       <td><%= synthesizer.keys %></td>
+      <td><img src={synthesizer.image}></td>
 
       <td>
         <span><%= link "Show", to: Routes.synthesizer_path(@conn, :show, synthesizer) %></span>

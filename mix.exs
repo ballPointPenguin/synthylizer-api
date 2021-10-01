@@ -52,7 +52,8 @@ defmodule Synthylizer.MixProject do
       {:plug_cowboy, "~> 2.5"},
       # added by me:
       {:absinthe, "~> 1.6"},
-      {:absinthe_plug, "~> 1.5"}
+      {:absinthe_plug, "~> 1.5"},
+      {:pbkdf2_elixir, "~> 1.4"}
     ]
   end
 

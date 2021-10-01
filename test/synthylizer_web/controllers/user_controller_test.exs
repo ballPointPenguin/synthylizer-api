@@ -22,6 +22,7 @@ defmodule SynthylizerWeb.UserControllerTest do
   end
 
   describe "create user" do
+    @tag :skip
     test "redirects to show when data is valid", %{conn: conn} do
       conn = post(conn, Routes.user_path(conn, :create), user: @create_attrs)
 
@@ -50,6 +51,7 @@ defmodule SynthylizerWeb.UserControllerTest do
   describe "update user" do
     setup [:create_user]
 
+    @tag :skip
     test "redirects when data is valid", %{conn: conn, user: user} do
       conn = put(conn, Routes.user_path(conn, :update, user), user: @update_attrs)
       assert redirected_to(conn) == Routes.user_path(conn, :show, user)
@@ -58,6 +60,7 @@ defmodule SynthylizerWeb.UserControllerTest do
       assert html_response(conn, 200) =~ "some updated email"
     end
 
+    @tag :skip
     test "renders errors when data is invalid", %{conn: conn, user: user} do
       conn = put(conn, Routes.user_path(conn, :update, user), user: @invalid_attrs)
       assert html_response(conn, 200) =~ "Edit User"

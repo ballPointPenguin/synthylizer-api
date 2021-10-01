@@ -42,13 +42,13 @@ defmodule Synthylizer.Instruments do
 
     Enum.reduce(criteria, query, fn
       {:limit, limit}, query ->
-        from s in query, limit: ^limit
+        query |> limit(^limit)
 
       {:filter, filters}, query ->
         filter_with(filters, query)
 
       {:order, order}, query ->
-        from s in query, order_by: [{^order, :id}]
+        query |> order_by({^order, :id})
     end)
     |> Repo.all
   end
@@ -64,6 +64,9 @@ defmodule Synthylizer.Instruments do
             ilike(q.description, ^pattern) or
             ilike(q.polyphony, ^pattern) or
             ilike(q.synthesis_type, ^pattern)
+
+      {:keys, count}, query ->
+        from q in query, where: q.keys == ^count
       end)
   end
 
