@@ -1,8 +1,8 @@
-defmodule Synthylizer.Repo.Migrations.CreateSynthesizers do
+defmodule Synthylizer.Repo.Migrations.CreateSynths do
   use Ecto.Migration
 
   def change do
-    create table(:synthesizers) do
+    create table(:synths) do
       add :name, :string, null: false
       add :description, :string
       add :image, :string
@@ -15,7 +15,7 @@ defmodule Synthylizer.Repo.Migrations.CreateSynthesizers do
       timestamps()
     end
 
-    create unique_index(:synthesizers, [:name])
-    create unique_index(:synthesizers, [:slug])
+    create unique_index(:synths, [:name])
+    create unique_index(:synths, [:slug])
   end
 end

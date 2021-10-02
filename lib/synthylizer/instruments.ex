@@ -6,28 +6,19 @@ defmodule Synthylizer.Instruments do
   import Ecto.Query, warn: false
   alias Synthylizer.Repo
 
-  alias Synthylizer.Instruments.Synthesizer
+  alias Synthylizer.Instruments.Synth
 
   @doc """
-  Returns the synthesizer with the given `slug`.
-
-  Raises `Ecto.NeResultsError` if no synth was found.
-  """
-  def get_synthesizer_by_slug!(slug) do
-    Repo.get_by!(Synthesizer, slug: slug)
-  end
-
-  @doc """
-  Returns the list of synthesizers.
+  Returns the list of synths.
 
   ## Examples
 
-      iex> list_synthesizers()
-      [%Synthesizer{}, ...]
+      iex> list_synths()
+      [%Synth{}, ...]
 
   """
-  def list_synthesizers do
-    Repo.all(Synthesizer)
+  def list_synths do
+    Repo.all(Synth)
   end
 
   @doc """
@@ -37,8 +28,8 @@ defmodule Synthylizer.Instruments do
 
   [{:limit, 15}, {:order, :asc}, {:filter, [{:matching, "sub"}, {:keys, 0}]}]
   """
-  def list_synthesizers(criteria) do
-    query = from s in Synthesizer
+  def list_synths(criteria) do
+    query = from s in Synth
 
     Enum.reduce(criteria, query, fn
       {:limit, limit}, query ->
@@ -71,83 +62,92 @@ defmodule Synthylizer.Instruments do
   end
 
   @doc """
-  Gets a single synthesizer.
+  Gets a single synth.
 
-  Raises `Ecto.NoResultsError` if the Synthesizer does not exist.
+  Raises `Ecto.NoResultsError` if the Synth does not exist.
 
   ## Examples
 
-      iex> get_synthesizer!(123)
-      %Synthesizer{}
+      iex> get_synth!(123)
+      %Synth{}
 
-      iex> get_synthesizer!(456)
+      iex> get_synth!(456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_synthesizer!(id), do: Repo.get!(Synthesizer, id)
+  def get_synth!(id), do: Repo.get!(Synth, id)
 
   @doc """
-  Creates a synthesizer.
+  Returns the synth with the given `slug`.
+
+  Raises `Ecto.NeResultsError` if no synth was found.
+  """
+  def get_synth_by_slug!(slug) do
+    Repo.get_by!(Synth, slug: slug)
+  end
+
+  @doc """
+  Creates a synth.
 
   ## Examples
 
-      iex> create_synthesizer(%{field: value})
-      {:ok, %Synthesizer{}}
+      iex> create_synth(%{field: value})
+      {:ok, %Synth{}}
 
-      iex> create_synthesizer(%{field: bad_value})
+      iex> create_synth(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_synthesizer(attrs \\ %{}) do
-    %Synthesizer{}
-    |> Synthesizer.changeset(attrs)
+  def create_synth(attrs \\ %{}) do
+    %Synth{}
+    |> Synth.changeset(attrs)
     |> Repo.insert()
   end
 
   @doc """
-  Updates a synthesizer.
+  Updates a synth.
 
   ## Examples
 
-      iex> update_synthesizer(synthesizer, %{field: new_value})
-      {:ok, %Synthesizer{}}
+      iex> update_synth(synth, %{field: new_value})
+      {:ok, %Synth{}}
 
-      iex> update_synthesizer(synthesizer, %{field: bad_value})
+      iex> update_synth(synth, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_synthesizer(%Synthesizer{} = synthesizer, attrs) do
-    synthesizer
-    |> Synthesizer.changeset(attrs)
+  def update_synth(%Synth{} = synth, attrs) do
+    synth
+    |> Synth.changeset(attrs)
     |> Repo.update()
   end
 
   @doc """
-  Deletes a synthesizer.
+  Deletes a synth.
 
   ## Examples
 
-      iex> delete_synthesizer(synthesizer)
-      {:ok, %Synthesizer{}}
+      iex> delete_synth(synth)
+      {:ok, %Synth{}}
 
-      iex> delete_synthesizer(synthesizer)
+      iex> delete_synth(synth)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_synthesizer(%Synthesizer{} = synthesizer) do
-    Repo.delete(synthesizer)
+  def delete_synth(%Synth{} = synth) do
+    Repo.delete(synth)
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking synthesizer changes.
+  Returns an `%Ecto.Changeset{}` for tracking synth changes.
 
   ## Examples
 
-      iex> change_synthesizer(synthesizer)
-      %Ecto.Changeset{data: %Synthesizer{}}
+      iex> change_synth(synth)
+      %Ecto.Changeset{data: %Synth{}}
 
   """
-  def change_synthesizer(%Synthesizer{} = synthesizer, attrs \\ %{}) do
-    Synthesizer.changeset(synthesizer, attrs)
+  def change_synth(%Synth{} = synth, attrs \\ %{}) do
+    Synth.changeset(synth, attrs)
   end
 end

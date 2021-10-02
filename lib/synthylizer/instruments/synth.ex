@@ -1,8 +1,8 @@
-defmodule Synthylizer.Instruments.Synthesizer do
+defmodule Synthylizer.Instruments.Synth do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "synthesizers" do
+  schema "synths" do
     field :description, :string
     field :image, :string
     field :keys, :integer, default: 0
@@ -16,11 +16,11 @@ defmodule Synthylizer.Instruments.Synthesizer do
   end
 
   @doc false
-  def changeset(synthesizer, attrs) do
+  def changeset(synth, attrs) do
     required_fields = [:name]
     optional_fields = [:description, :release_year, :polyphony, :synthesis_type, :keys, :slug, :image]
 
-    synthesizer
+    synth
     |> cast(attrs, required_fields ++ optional_fields)
     |> validate_required(required_fields)
     |> unique_constraint(:name)

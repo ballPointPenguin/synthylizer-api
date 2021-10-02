@@ -7,31 +7,32 @@ defmodule Synthylizer.InstrumentsFixtures do
   alias Synthylizer.Repo
 
   alias Synthylizer.Instruments
-  alias Synthylizer.Instruments.{Synthesizer}
+  alias Synthylizer.Instruments.Synth
 
   @doc """
-  Generate a synthesizer.
+  Generate a synth.
   """
-  def synthesizer_fixture(attrs \\ %{}) do
-    {:ok, synthesizer} =
+  def synth_fixture(attrs \\ %{}) do
+    {:ok, synth} =
       attrs
       |> Enum.into(%{
         description: "some description",
+        image: "some-image.jpg",
         keys: 42,
         name: "some name",
-        slug: "some-name",
         polyphony: "some polyphony",
         release_year: 42,
+        slug: "some-name",
         synthesis_type: "some synthesis_type"
       })
-      |> Instruments.create_synthesizer()
+      |> Synthylizer.Instruments.create_synth()
 
-    synthesizer
+    synth
   end
 
-  def synthesizers_fixture() do
+  def synths_fixture() do
     synth1 =
-      %Synthesizer{
+      %Synth{
         description: "description-1",
         keys: 37,
         name: "Synth 1",
@@ -42,7 +43,7 @@ defmodule Synthylizer.InstrumentsFixtures do
       } |> Repo.insert!
 
     synth2 =
-      %Synthesizer{
+      %Synth{
         description: "description-2",
         keys: 88,
         name: "Synth 2",
@@ -53,7 +54,7 @@ defmodule Synthylizer.InstrumentsFixtures do
       } |> Repo.insert!
 
     synth3 =
-      %Synthesizer{
+      %Synth{
         description: "description-3",
         keys: 0,
         name: "Synth 3",

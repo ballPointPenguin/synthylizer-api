@@ -17,8 +17,6 @@ defmodule Synthylizer.AccountsFixtures do
       })
       |> Synthylizer.Accounts.create_user()
 
-    # IO.inspect(user)
-
     user
   end
 end
